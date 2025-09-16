@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме Положенцева А.А.</title>
+    <!-- Подключаем Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Подключаем Angular Animate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+    <!-- Иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+        }
+
+        body {
+            color: rgb(56, 56, 56);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s ease-out 0.3s forwards;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #3498db;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .profile-img-container {
+            position: relative;
+            margin-right: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .profile-img-container:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: white;
+        }
+
+        .profile-img-container:hover .profile-overlay {
+            opacity: 1;
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .name {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .position {
+            font-size: 20px;
+            color: #3498db;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            animation: sectionFadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Для плавного появления */
+        .section:nth-child(1) {
+            animation-delay: 0.4s;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .section:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .section:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+
+        .section:nth-child(5) {
+            animation-delay: 0.8s;
+        }
+
+        .section:nth-child(6) {
+            animation-delay: 0.9s;
+        }
+
+        .section:nth-child(7) {
+            animation-delay: 1.0s;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .info-item {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .info-label {
+            font-weight: bold;
+            min-width: 200px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-label i {
+            margin-right: 8px;
+            color: #3498db;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 5px;
+            transition: color 0.3s;
+        }
+
+        li:hover {
+            color: #2980b9;
+        }
+
+        li:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            transition: color 0.3s;
+        }
+
+        li:hover:before {
+            color: #2980b9;
+        }
+
+        .contacts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, #f7f9fb 0%, #e9ecef 100%);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item i {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        .contact-item strong {
+            margin-right: 8px;
+        }
+
+        .contact-item a {
+            color: #3498db;
+        }
+
+        .progress-container {
+            margin-top: 10px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .print-btn:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .project-item {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            background: #e9ecef;
+            border-left-color: #2980b9;
+            transform: translateX(5px);
+        }
+
+        .programming-category {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #3498db;
+        }
+
+        .programming-category:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .programming-category h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-img-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .info-item {
+                flex-direction: column;
+            }
+
+            .info-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+
+            .contacts {
+                flex-direction: column;
+            }
+
+            .contact-item {
+                min-width: auto;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .name {
+                font-size: 28px;
+            }
+
+            .position {
+                font-size: 18px;
+            }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: ffffff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        body.dark-theme {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ffffff;
+        }
+
+        body.dark-theme .container {
+            background-color: #2c3e50;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-theme .name,
+        body.dark-theme .section-title,
+        body.dark-theme .info-label,
+        body.dark-theme .progress-label,
+        body.dark-theme .programming-category h3 {
+            color: #ffffff;
+        }
+
+        body.dark-theme .section {
+            background: #34495e;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-theme .contact-item {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        }
+
+        body.dark-theme .project-item {
+            background: #2c3e50;
+        }
+
+        body.dark-theme .project-item:hover {
+            background: #2c3e50;
+        }
+
+        body.dark-theme .progress-bar {
+            background: #2c3e50;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sectionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body ng-app="resumeApp" ng-controller="ResumeController" ng-class="{'dark-theme': darkTheme}">
+    <div class="theme-toggle" ng-click="toggleTheme()">
+        <i class="fas" ng-class="darkTheme ? 'fa-sun' : 'fa-moon'"></i>
+    </div>
+
+    <div class="print-btn" ng-click="printResume()">
+        <i class="fas fa-print"></i>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="profile-img-container">
+                <img ng-src="{{resume.photo}}" alt="Фото профиля" class="profile-img">
+                <div class="profile-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="header-info">
+                <h1 class="name">{{resume.fullName}}</h1>
+                <h2 class="position">{{resume.desiredPosition}}</h2>
+                <p>
+                    <i class="fas fa-birthday-cake"></i> Дата рождения: {{resume.birthDate}}
+                </p>
+                <p>
+                    <i class="fas fa-city"></i> Город: {{resume.city}}
+                </p>
+            </div>
+        </div>
+
+        <p style="padding-bottom: 10px;">
+            Резюме реализовано в виде одностраничного сайта (задача простая и не требует сложной архитектуры) с использованием Angular
+        </p>
+
+        <div class="section" id="contacts">
+            <h2 class="section-title"><i class="fas fa-address-card"></i> Контактная информация</h2>
+            <div class="contacts">
+                <div class="contact-item">
+                    <strong>Телефон: </strong> {{resume.phone}}
+                </div>
+                <div class="contact-item">
+                    <strong>Email: </strong> {{resume.email}}
+                </div>
+                <div class="contact-item">
+                    <strong>Teams: </strong> <a href="{{resume.teamsAccount}}">polozhencev16@bk.ru</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="education">
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Образование</h2>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-book"></i> Текущий курс:</span>
+                <span>{{resume.education.currentCourse}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-university"></i> Учебное заведение:</span>
+                <span>{{resume.education.institution}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-building"></i> Факультет:</span>
+                <span>{{resume.education.faculty}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-certificate"></i> Специальность:</span>
+                <span>{{resume.education.specialty}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label"><i class="fas fa-calendar-alt"></i> Период обучения:</span>
+                <span>{{resume.education.period}}</span>
+            </div>
+        </div>
+
+        <div class="section" id="programming">
+            <h2 class="section-title"><i class="fas fa-code"></i> Опыт программирования</h2>
+
+            <div ng-repeat="exp in resume.programmingExperience" class="programming-category">
+                <h3>{{exp.description}}</h3>
+                <div class="project-item" ng-repeat="project in exp.projects">
+                    <i class="fas fa-project-diagram"></i> {{project}}
+                </div>
+            </div>
+
+            <div class="progress-container" ng-if="resume.skills">
+                <h4><i class="fas fa-star"></i> Уровень навыков:</h4>
+                <div ng-repeat="skill in resume.skills">
+                    <div class="progress-label">
+                        <span>{{skill.name}}</span>
+                        <span>{{skill.level}}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{skill.level}}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="english">
+            <h2 class="section-title"><i class="fas fa-language"></i> Уровень английского</h2>
+            <p>
+                {{resume.englishLevel}}
+            </p>
+
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Уровень владения</span>
+                    <span>{{resume.englishLevelPercent}}%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{resume.englishLevelPercent}}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="goals">
+            <h2 class="section-title"><i class="fas fa-bullseye"></i> Цели посещения курсов</h2>
+            <p>
+                {{resume.courseGoals}}
+            </p>
+        </div>
+
+        <div class="section" id="source">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> Откуда узнали о курсе</h2>
+            <p>
+                {{resume.courseSource}}
+            </p>
+        </div>
+    </div>
+
+    <script>
+        angular.module('resumeApp', ['ngAnimate'])
+            .controller('ResumeController', function ($scope, $timeout) {
+                $scope.resume = {
+                    fullName: "Положенцев Аксель Алексеевич",
+                    photo: "https://sun9-20.userapi.com/s/v1/ig2/1223XtiV7dlw-VcC7wWgq8BfRT2hScJjXBq3SDY1bslIE3SOlx91Yj09tsfj4Hf-Gtg1VP_jQCoZ_bryXpELw5At.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,1080x1440,1280x1707,1440x1920,1620x2160&from=bu&cs=1620x0",
+                    desiredPosition: "Frontend-разработчик",
+                    birthDate: "23.05.2004",
+                    city: "Москва",
+                    phone: "+7 (989) 271-48-30",
+                    email: "polozhencev16@bk.ru",
+                    teamsAccount: "https://teams.live.com/l/invite/FEAxt2Q5m3TlVeymwE?v=g1",
+
+                    education: {
+                        currentCourse: "4 курс",
+                        institution: "Российский химико-технологический университет имени Д. И. Менделеева",
+                        faculty: "Факультет цифровых технологий и химического инжиниринга",
+                        specialty: "09.03.00 Информатика и вычислительная техника",
+                        period: "2022 - 2026"
+                    },
+
+                    programmingExperience: [
+                        {
+                            description: "Пет-проекты вне университета:",
+                            projects: [
+                                "Набор готовых шаблонов для веб-сайтов",
+                                "Набор скриптов для автоматизации серверных задач: развертывания, мониторинга, резервного копирования и обеспечения безопасности.",
+                                "Разработка чат-бота для интеграции его в веб-сайт"
+                            ]
+                        },
+                        {
+                            description: "Проекты от университета:",
+                            projects: [
+                                "Курсовая работа: Система управления библиотекой",
+                                "Дипломный проект: Веб-сайт открытого Лектория РХТУ",
+                                "Лабораторная работа: Многопоточное приложение",
+                                "Учебный проект: Веб-сайт Национального комитета химиков России (NCRH)"
+                            ]
+                        }
+                    ],
+
+                    skills: [
+                        { name: "HTML/CSS", level: 85 },
+                        { name: "JavaScript", level: 80 },
+                        { name: "Vue.js", level: 55 }
+                    ],
+
+                    englishLevel: "Intermediate (B1). Могу читать техническую документацию и поддерживать беседу на общие темы.",
+                    englishLevelPercent: 40,
+
+                    courseGoals: "Хочу систематизировать знания по современному фронтенду, изучить лучшие практики разработки и получить опыт работы с Angular.",
+
+                    courseSource: "Узнал из группы Telegram."
+                };
+
+                $scope.darkTheme = false;
+                $scope.toggleTheme = function () {
+                    $scope.darkTheme = !$scope.darkTheme;
+                };
+
+                $scope.printResume = function () {
+                    window.print();
+                };
+
+                $timeout(function () {
+                    const progressBars = document.querySelectorAll('.progress-fill');
+                    progressBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        $timeout(function () {
+                            bar.style.width = width;
+                        }, 300);
+                    });
+                }, 500);
+            });
+    </script>
+</body>
+
+</html>
